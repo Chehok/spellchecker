@@ -30,6 +30,11 @@ function applyAll(text, issues) {
   for (const i of [...issues].sort((a, b) => b.start - a.start)) out = out.slice(0, i.start) + i.suggestion + out.slice(i.end);
   return out;
 }
-const api = { check, applyAll, dictSize: data.DICT.length, ruleCount: data.RULES.length };
+function summarize(issues) {
+  const m = new Map();
+  for (const i of issues) { const k = i.original; const e = m.get(k) || { original: k, suggestion: i.suggestion, count: 0 }; e.count++; m.set(k, e); }
+  return [...m.values()].sort((a, b) => b.count - a.count);
+}
+const api = { check, applyAll, summarize, dictSize: data.DICT.length, ruleCount: data.RULES.length };
 if (typeof module !== 'undefined') module.exports = api; else root.SpellEngine = api;
 })(this);

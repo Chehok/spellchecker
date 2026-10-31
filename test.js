@@ -7,6 +7,7 @@ const cases = [
  ['정말 ?', '정말?'], ['그래서,나는', '그래서, 나는'], ['내일 할께요', '내일 할게요'],
  ['그는 왠지 슬펐다', '그는 왠지 슬펐다'], ['올바른 문장입니다.', '올바른 문장입니다.'],
 ];
+{ const w = E.summarize(E.check('금새 금새 금새 몇일')); assert.deepStrictEqual(w.map(x => [x.original, x.suggestion, x.count]), [['금새','금세',3],['몇일','며칠',1]]); console.log('✔ summarize'); }
 let pass = 0;
 for (const [i, o] of cases) { try { assert.strictEqual(fix(i), o); pass++; console.log('✔', i, '→', o); } catch (e) { console.log('✘', i, '→', fix(i), '(기대:', o + ')'); } }
 console.log(`${pass}/${cases.length} passed; dict=${E.dictSize}, rules=${E.ruleCount}`);
