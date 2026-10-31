@@ -1,0 +1,11 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>맞춤법 검사기</title><link rel="stylesheet" href="style.css"></head><body>
+<header><h1>맞춤법 검사기</h1><p>사전·규칙 기반 · 서버 없이 브라우저에서 동작</p></header>
+<main>
+<section class="card"><textarea id="input" placeholder="검사할 문장을 입력하세요. 예: 금새 설겆이를 끝내고 몇일 쉬면 어떻해?"></textarea>
+<div class="bar"><span id="count">0자</span><button id="check" class="primary">검사</button></div></section>
+<section class="card" id="resultCard" hidden>
+<div class="bar"><strong id="summary"></strong><span><button id="applyAll">모두 적용</button> <button id="copy">결과 복사</button></span></div>
+<div id="output"></div><ul id="list"></ul></section>
+</main><footer id="foot"></footer>
+<script src="data.js"></script><script src="engine.js"></script><script src="app.js"></script></body></html>
