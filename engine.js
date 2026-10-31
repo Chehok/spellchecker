@@ -32,7 +32,7 @@ function applyAll(text, issues) {
 }
 function summarize(issues) {
   const m = new Map();
-  for (const i of issues) { const k = i.original; const e = m.get(k) || { original: k, suggestion: i.suggestion, count: 0 }; e.count++; m.set(k, e); }
+  for (const i of issues) { const k = i.original.trim() || i.original; const e = m.get(k) || { original: k, suggestion: i.original.trim() ? i.suggestion.trim() : i.suggestion, count: 0 }; e.count++; m.set(k, e); }
   return [...m.values()].sort((a, b) => b.count - a.count);
 }
 const api = { check, applyAll, summarize, dictSize: data.DICT.length, ruleCount: data.RULES.length };
