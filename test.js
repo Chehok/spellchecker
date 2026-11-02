@@ -12,7 +12,48 @@ const cases = [
   assert.deepStrictEqual(E.summarize(is).map(x => x.original), ['금새', '몇일']);
   assert.ok(!is.some(i => /[\])]/.test(i.original)));
   assert.ok(!is.some(i => /[훈연서사]/.test(i.original)));
-  assert.strictEqual(E.countFormatting(is), 7); console.log('✔ 목록에서 띄어쓰기·문장부호 제외, 괄호·음절 미포함'); }
+  assert.strictEqual(E.countFormatting(is), 7);
+
+  // Reproduce the invisible changes independently of the rules that create them.
+  const formatting = [
+    ...Array.from({ length: 18 }, () => ({ original: ' .', suggestion: '.' })),
+    ...Array.from({ length: 18 }, () => ({ original: ' ]', suggestion: ']' })),
+    ...['훈', '연', '서', '사'].map(s => ({ original: s + '\t\n\u00a0\u3000', suggestion: s })),
+    { original: '할수', suggestion: '할 수' },
+    { original: '...', suggestion: '.' },
+  ];
+  assert.deepStrictEqual(E.summarize(formatting), []);
+  assert.strictEqual(E.countFormatting(formatting), formatting.length);
+  for (const text of ['[ 1 ]', '[ ]', '( 가 )', '훈 연 서 사', '문단\n.', '문단\r\n.']) {
+    assert.deepStrictEqual(E.check(text), [], text);
+  }
+  const syllableIssues = E.check('훈  연  서  사');
+  assert.deepStrictEqual(syllableIssues.map(i => [i.start, i.end, i.original, i.suggestion]),
+    [[1, 3, '  ', ' '], [4, 6, '  ', ' '], [7, 9, '  ', ' ']]);
+  assert.strictEqual(fix('훈  연  서  사'), '훈 연 서 사');
+
+  // Exercise the browser render path, including retained inline highlights.
+  const fs = require('fs'); const vm = require('vm');
+  const elements = new Map();
+  const document = {
+    getElementById(id) { if (!elements.has(id)) elements.set(id, {}); return elements.get(id); },
+    addEventListener() {},
+  };
+  const browser = vm.createContext({ document });
+  for (const file of ['data.js', 'engine.js', 'app.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), browser);
+  const input = document.getElementById('input');
+  input.value = t; document.getElementById('check').onclick();
+  assert.strictEqual(document.getElementById('fmt').textContent, '띄어쓰기·문장부호 수정 7건');
+  assert.strictEqual(document.getElementById('words').innerHTML, '<li>금새 → 금세 (1회)</li><li>몇일 → 며칠 (1회)</li>');
+  assert.strictEqual((document.getElementById('output').innerHTML.match(/<mark /g) || []).length, is.length);
+  input.value = '훈  연  서  사'; document.getElementById('check').onclick();
+  assert.strictEqual(document.getElementById('words').innerHTML, '');
+  assert.strictEqual(document.getElementById('fmt').textContent, '띄어쓰기·문장부호 수정 3건');
+  assert.strictEqual(document.getElementById('wordCard').hidden, false);
+  input.value = '[ 1 ]'; document.getElementById('check').onclick();
+  assert.strictEqual(document.getElementById('wordCard').hidden, true);
+  assert.strictEqual(document.getElementById('fmt').textContent, '');
+  console.log('✔ 목록에서 띄어쓰기·문장부호 제외, 괄호·음절 미포함'); }
 let pass = 0;
 for (const [i, o] of cases) { try { assert.strictEqual(fix(i), o); pass++; console.log('✔', i, '→', o); } catch (e) { console.log('✘', i, '→', fix(i), '(기대:', o + ')'); } }
 console.log(`${pass}/${cases.length} passed; dict=${E.dictSize}, rules=${E.ruleCount}`);
