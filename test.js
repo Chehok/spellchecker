@@ -8,6 +8,11 @@ const cases = [
  ['그는 왠지 슬펐다', '그는 왠지 슬펐다'], ['올바른 문장입니다.', '올바른 문장입니다.'],
 ];
 { const w = E.summarize(E.check('금새 금새 금새 몇일')); assert.deepStrictEqual(w.map(x => [x.original, x.suggestion, x.count]), [['금새','금세',3],['몇일','며칠',1]]); console.log('✔ summarize'); }
+{ const t = '금새 갔다 .\n[ 1 ]  (가) 몇일 .\n훈  연  서  사 할수 있다'; const is = E.check(t);
+  assert.deepStrictEqual(E.summarize(is).map(x => x.original), ['금새', '몇일']);
+  assert.ok(!is.some(i => /[\])]/.test(i.original)));
+  assert.ok(!is.some(i => /[훈연서사]/.test(i.original)));
+  assert.strictEqual(E.countFormatting(is), 7); console.log('✔ 목록에서 띄어쓰기·문장부호 제외, 괄호·음절 미포함'); }
 let pass = 0;
 for (const [i, o] of cases) { try { assert.strictEqual(fix(i), o); pass++; console.log('✔', i, '→', o); } catch (e) { console.log('✘', i, '→', fix(i), '(기대:', o + ')'); } }
 console.log(`${pass}/${cases.length} passed; dict=${E.dictSize}, rules=${E.ruleCount}`);
