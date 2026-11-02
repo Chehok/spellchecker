@@ -10,7 +10,7 @@ function run() {
   issues.forEach((x, i) => { html += h(t.slice(p, x.start)) + `<mark data-i="${i}" title="${h(x.message)}">${h(x.original) || '␣'}</mark>`; p = x.end; });
   $('output').innerHTML = html + h(t.slice(p));
   $('list').innerHTML = issues.map((x, i) => `<li><span class="o">${h(x.original)}</span> → <button class="s" data-i="${i}">${h(x.suggestion) || '(삭제)'}</button><small>${h(x.message)}</small></li>`).join('');
-  const w = SpellEngine.summarize(issues); const f = SpellEngine.countFormatting(issues); $('wordCard').hidden = !w.length && !f; $('fmt').textContent = f ? `띄어쓰기·문장부호 수정 ${f}건` : '';
+  const w = SpellEngine.summarize(issues); const f = SpellEngine.countFormatting(issues); $('wordCard').hidden = !w.length && !f; $('fmt').textContent = f ? `띄어쓰기·문장부호 정리 ${f}건` : '';
   $('words').innerHTML = w.map(x => `<li>${h(x.original) || '␣'} → ${h(x.suggestion) || '(삭제)'} (${x.count}회)</li>`).join('');
 }
 function apply(i) { const x = issues[i]; inp.value = inp.value.slice(0, x.start) + x.suggestion + inp.value.slice(x.end); inp.oninput(); run(); }
