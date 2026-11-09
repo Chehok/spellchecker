@@ -46,14 +46,14 @@ const cases = [
   const input = document.getElementById('input');
   input.value = t; document.getElementById('check').onclick();
   assert.strictEqual(document.getElementById('fmt').textContent, '띄어쓰기·문장부호 정리 6건');
-  assert.strictEqual(document.getElementById('words').innerHTML, '<li>금새 → 금세 (1회)</li><li>몇일 → 며칠 (1회)</li><li>할수 → 할 수 (1회)</li>');
+  assert.strictEqual(document.getElementById('words').innerHTML, '<li><span class="wordPair">금새 → 금세</span><span class="wordCount">1회</span></li><li><span class="wordPair">몇일 → 며칠</span><span class="wordCount">1회</span></li><li><span class="wordPair">할수 → 할 수</span><span class="wordCount">1회</span></li>');
   assert.strictEqual((document.getElementById('output').innerHTML.match(/<mark /g) || []).length, is.length);
   input.value = '훈  연  서  사'; document.getElementById('check').onclick();
-  assert.strictEqual(document.getElementById('words').innerHTML, '');
+  assert.strictEqual(document.getElementById('words').innerHTML, '<li class="empty">중복 단어가 없으면 이 목록은 비어 있습니다.</li>');
   assert.strictEqual(document.getElementById('fmt').textContent, '띄어쓰기·문장부호 정리 3건');
   assert.strictEqual(document.getElementById('wordCard').hidden, false);
   input.value = '[ 1 ]'; document.getElementById('check').onclick();
-  assert.strictEqual(document.getElementById('wordCard').hidden, true);
+  assert.strictEqual(document.getElementById('wordCard').hidden, false);
   assert.strictEqual(document.getElementById('fmt').textContent, '');
   console.log('✔ 공백·문장부호 정리 집계, 괄호·음절 미포함'); }
 {

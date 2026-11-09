@@ -1,12 +1,37 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>맞춤법 검사기</title><link rel="stylesheet" href="style.css?v=20261102a"></head><body>
-<header><h1>맞춤법 검사기</h1><p>사전·규칙 기반 · 서버 없이 브라우저에서 동작</p></header>
-<main>
-<section class="card"><textarea id="input" placeholder="검사할 문장을 입력하세요. 예: 금새 설겆이를 끝내고 몇일 쉬면 어떻해?"></textarea>
-<div class="bar"><span id="count">0자</span><button id="check" class="primary">검사</button></div></section>
+<title>한국어 맞춤법 검사기</title>
+<meta name="description" content="사전·규칙 기반 한국어 맞춤법 검사기. 입력 문장은 브라우저 안에서만 처리됩니다.">
+<link rel="canonical" href="https://chehok.github.io/spellchecker/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="한국어 맞춤법 검사기">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://chehok.github.io/spellchecker/">
+<meta property="og:title" content="한국어 맞춤법 검사기">
+<meta property="og:description" content="사전·규칙 기반 정적 맞춤법 검사기 · 입력은 외부로 전송되지 않습니다.">
+<meta property="og:image" content="https://chehok.github.io/spellchecker/assets/og-thumbnail-1200x630.png">
+<meta property="og:image:alt" content="한국어 맞춤법 검사기 미리보기 이미지">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="한국어 맞춤법 검사기">
+<meta name="twitter:description" content="사전·규칙 기반 정적 맞춤법 검사기 · 입력은 외부로 전송되지 않습니다.">
+<meta name="twitter:image" content="https://chehok.github.io/spellchecker/assets/og-thumbnail-1200x630.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=20261109a"></head><body>
+<div class="page">
+<header class="topbar"><div class="brand"><span class="brandMark" aria-hidden="true">가✓</span><div><h1>한국어 맞춤법 검사기</h1><p>사전·규칙 기반 · 브라우저 안에서만 동작</p></div></div><p class="topHint">빠른 실행: Ctrl/Cmd + Enter</p></header>
+<main class="workspace">
+<section class="card"><div class="sectionHead"><h2>문장 입력</h2><p>검사할 문장을 붙여넣거나 직접 입력하세요.</p></div><label for="input" class="fieldLabel">검사할 문장</label><textarea id="input" placeholder="예: 금새 설겆이를 끝내고 몇일 쉬면 어떻해?"></textarea>
+<div class="bar"><span id="count" class="count" aria-live="polite">0자</span><button id="check" class="primary">검사</button></div></section>
 <section class="card" id="resultCard" hidden>
-<div class="bar"><strong id="summary"></strong><span><button id="applyAll">모두 적용</button> <button id="copy">결과 복사</button></span></div>
-<div id="output"></div><ul id="list"></ul></section>
-<section class="card" id="wordCard" hidden><div class="bar"><strong>틀린 단어 목록</strong><button id="copyWords">목록 복사</button></div><ol id="words"></ol><p id="fmt"></p></section>
-</main><footer id="foot"></footer>
-<script src="data.js?v=20261102a"></script><script src="engine.js?v=20261102a"></script><script src="app.js?v=20261102a"></script></body></html>
+<div class="sectionHead"><h2>본문 결과</h2><p id="summary"></p></div>
+<div class="bar"><span id="resultState" class="state"></span><span class="actions"><button id="applyAll">모두 적용</button> <button id="copy">결과 복사</button></span></div>
+<div id="output" aria-live="polite"></div><ul id="list" class="issues"></ul></section>
+</main>
+<section class="card prominent" id="wordCard" hidden><div class="sectionHead row"><div><h2>틀린 단어 목록</h2><p>중복 단어를 빈도순으로 묶어 보여줍니다.</p></div><button id="copyWords">목록 복사</button></div><p id="wordState" class="state"></p><ol id="words" class="wordList"></ol><p id="fmt"></p></section>
+<footer id="foot"></footer>
+</div>
+<script src="data.js?v=20261102a"></script><script src="engine.js?v=20261102a"></script><script src="app.js?v=20261109a"></script></body></html>
