@@ -37,9 +37,26 @@ body{
 .brand{display:flex;align-items:center;gap:12px}
 .brandMark{
   min-width:44px;height:44px;border-radius:12px;
-  display:grid;place-items:center;
+  display:block;position:relative;overflow:hidden;
   background:linear-gradient(145deg,#1e84aa,#155f80);
-  color:#fff;font-size:21px;font-weight:700;
+  color:#fff;
+}
+.brandGa{
+  position:absolute;
+  left:8px;
+  top:8px;
+  font-size:23px;
+  line-height:1;
+  font-weight:800;
+}
+.brandCheck{
+  position:absolute;
+  right:7px;
+  bottom:5px;
+  font-size:18px;
+  line-height:1;
+  color:#d9f5ff;
+  font-weight:700;
 }
 .topbar h1{margin:0;font-size:1.2rem;letter-spacing:-0.01em}
 .topbar p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
@@ -116,6 +133,13 @@ mark{
   border-top:1px solid #e8edf1;
 }
 .issues li:first-child{border-top:none}
+.issues li.formatting{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.formatLabel{color:var(--text);font-weight:600}
 .issues li.empty,.wordList li.empty{
   color:var(--muted);
   background:var(--accent-soft);
@@ -131,7 +155,15 @@ small{display:block;color:var(--muted);margin-top:6px}
   display:flex;align-items:center;justify-content:space-between;gap:8px;
   padding:9px 11px;border-radius:11px;border:1px solid #e0e8ed;background:#fcfeff;
 }
-.wordPair{font-weight:600}
+.wordPair{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-weight:600;
+}
+.wordOriginal{color:#9a3645;text-decoration:line-through}
+.wordArrow{color:#7b8791}
+.wordSuggestion{color:#155a76}
 .wordCount{
   font-size:.82rem;
   color:var(--muted);

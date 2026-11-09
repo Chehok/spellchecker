@@ -46,7 +46,7 @@ const cases = [
   const input = document.getElementById('input');
   input.value = t; document.getElementById('check').onclick();
   assert.strictEqual(document.getElementById('fmt').textContent, '띄어쓰기·문장부호 정리 6건');
-  assert.strictEqual(document.getElementById('words').innerHTML, '<li><span class="wordPair">금새 → 금세</span><span class="wordCount">1회</span></li><li><span class="wordPair">몇일 → 며칠</span><span class="wordCount">1회</span></li><li><span class="wordPair">할수 → 할 수</span><span class="wordCount">1회</span></li>');
+  assert.strictEqual(document.getElementById('words').innerHTML, '<li><span class="wordPair"><span class="wordOriginal">금새</span><span class="wordArrow">→</span><span class="wordSuggestion">금세</span></span><span class="wordCount">1회</span></li><li><span class="wordPair"><span class="wordOriginal">몇일</span><span class="wordArrow">→</span><span class="wordSuggestion">며칠</span></span><span class="wordCount">1회</span></li><li><span class="wordPair"><span class="wordOriginal">할수</span><span class="wordArrow">→</span><span class="wordSuggestion">할 수</span></span><span class="wordCount">1회</span></li>');
   assert.strictEqual((document.getElementById('output').innerHTML.match(/<mark /g) || []).length, is.length);
   input.value = '훈  연  서  사'; document.getElementById('check').onclick();
   assert.strictEqual(document.getElementById('words').innerHTML, '<li class="empty">중복 단어가 없으면 이 목록은 비어 있습니다.</li>');
